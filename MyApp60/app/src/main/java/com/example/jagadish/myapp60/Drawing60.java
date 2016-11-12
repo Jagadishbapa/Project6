@@ -249,7 +249,7 @@ public class Drawing60 extends View {
 
                         //System.out.println("Player 1 play");
                     } else {
-                        getMove();
+                        getWinningMove();
                         //System.out.println(aix + "  " + aiy);
                         ev.setLocation(aix, aiy);
                         onTouchEvent(ev);
@@ -491,10 +491,11 @@ public class Drawing60 extends View {
 
 
     //getting ai move
-    void getMove()
+    void getWinningMove()
     {
 
         boolean w=false;
+        //get winning move
         for(int i=0;i<3;i++)
         {
             for (int j = 0; j < 3; j++) {
@@ -513,6 +514,7 @@ public class Drawing60 extends View {
         }
         System.out.println("fail11111111111111111111111111111111111");
 
+        //get blocking move
         for(int i=0;i<3;i++)
         {
             for (int j = 0; j < 3; j++) {
@@ -530,6 +532,7 @@ public class Drawing60 extends View {
         }
         System.out.println("fail222222222222222222222222222222222222222222");
 
+        //get center move
         if (rectvals[1][1].equals(""))
         {
             this.aix = 1;
