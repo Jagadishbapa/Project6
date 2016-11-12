@@ -42,7 +42,7 @@ public class Drawing60 extends View {
 
 
         if(count==0) {
-            System.out.println("count="+count);
+           // System.out.println("count="+count);
             if (ai)
             {
 
@@ -101,7 +101,7 @@ public class Drawing60 extends View {
 
     //Drawing when size changed or ontouchevent
     protected void onDraw(Canvas canvas) {
-        System.out.println("cccccccccccccccccccccccccccccccccccccccccccccccccccccccc"+count);
+        //System.out.println("cccccccccccccccccccccccccccccccccccccccccccccccccccccccc"+count);
         Log.v("height" + Integer.toString(getHeight()) + Float.toString(sch), "  width" + Integer.toString(getWidth()) + Float.toString(scw));
 
         float height1 = getHeight();
@@ -159,7 +159,7 @@ public class Drawing60 extends View {
             sizec=false;
             if (ai) {
                 if (pla1) {
-                    System.out.println("YOU WON!!");
+                    //System.out.println("YOU WON!!");
 
                     Intent intent = new Intent(getContext(), Status.class);
                     intent.putExtra("status", "YOU WON!!");
@@ -171,7 +171,7 @@ public class Drawing60 extends View {
                     draw.startActivity(intent);
 
                 } else {
-                    System.out.println("YOU LOST");
+                    //System.out.println("YOU LOST");
 
                     Intent intent = new Intent(getContext(), Status.class);
                     intent.putExtra("status", "YOU LOST");
@@ -184,7 +184,7 @@ public class Drawing60 extends View {
                 }
             } else {
                 if (pla1) {
-                    System.out.println("PlAYER 1 WON!!");
+                    //System.out.println("PlAYER 1 WON!!");
                     Intent intent = new Intent(getContext(), Status.class);
                     intent.putExtra("status", "PlAYER 1 WON!!");
                     if (ai)
@@ -197,7 +197,7 @@ public class Drawing60 extends View {
 
 
                 } else {
-                    System.out.println("PlAYER 2 WON!!");
+                    //System.out.println("PlAYER 2 WON!!");
                     Intent intent = new Intent(getContext(), Status.class);
                     intent.putExtra("status", "PlAYER 2 WON!!");
                     if (ai)
@@ -213,7 +213,7 @@ public class Drawing60 extends View {
             if (isBoardFilled()) {//checking if all boxes are filled
                 count=0;
                 sizec=false;
-                System.out.println("GAME IS DRAW");
+                //System.out.println("GAME IS DRAW");
 
                 Intent intent = new Intent(getContext(), Status.class);
                 intent.putExtra("status", "GAME IS DRAW!!");
@@ -247,10 +247,10 @@ public class Drawing60 extends View {
 
 
 
-                        System.out.println("Player 1 play");
+                        //System.out.println("Player 1 play");
                     } else {
                         getMove();
-                        System.out.println(aix + "  " + aiy);
+                        //System.out.println(aix + "  " + aiy);
                         ev.setLocation(aix, aiy);
                         onTouchEvent(ev);
 
@@ -279,7 +279,7 @@ public class Drawing60 extends View {
                             }
                         }, 100);
 
-                        System.out.println("Player 1 play");
+                        //System.out.println("Player 1 play");
                     } else {
 
                         Context context = draw;
@@ -297,7 +297,7 @@ public class Drawing60 extends View {
                             }
                         }, 100);
 
-                        System.out.println("Player 2 play");
+                        //System.out.println("Player 2 play");
                     }
 
 
@@ -372,9 +372,8 @@ public class Drawing60 extends View {
         else
         a=pl2;
 
-        System.out.println(a);
 
-        //check col
+        //checking the column
         for(int i = 0; i < 3; i++){
             if(!rectvals[posx][i].equals(a))
                 break;
@@ -383,7 +382,7 @@ public class Drawing60 extends View {
             }
         }
 
-        //check row
+        //checking the row
                 for(int i = 0; i < 3; i++){
             if(!rectvals[i][posy].equals(a))
                 break;
@@ -392,9 +391,8 @@ public class Drawing60 extends View {
             }
         }
 
-        //check diag
+        //checking the diagonal
         if(posx == posy){
-            //we're on a diagonal
             for(int i = 0; i < 3; i++){
                 if(!rectvals[i][i].equals(a))
                     break;
@@ -404,7 +402,7 @@ public class Drawing60 extends View {
             }
         }
 
-        //check anti diag (thanks rampion)
+        //checking reverse diagonal
         if(posx + posy == 2){
             for(int i = 0;i<3;i++){
                 if(!rectvals[i][2-i].equals(a))
@@ -436,9 +434,110 @@ public class Drawing60 extends View {
         return a;
     }
 
+
+
+
+    boolean isGameOver1(String plval,int posx,int posy)
+    {
+
+        String a=plval;
+
+
+        //checking the column
+        for(int i = 0; i < 3; i++){
+            if(!rectvals[posx][i].equals(a))
+                break;
+            if(i == 2){
+                return true;
+            }
+        }
+
+        //checking the row
+        for(int i = 0; i < 3; i++){
+            if(!rectvals[i][posy].equals(a))
+                break;
+            if(i == 2){
+                return true;
+            }
+        }
+
+        //checking the diagonal
+        if(posx == posy){
+            //we're on a diagonal
+            for(int i = 0; i < 3; i++){
+                if(!rectvals[i][i].equals(a))
+                    break;
+                if(i == 2){
+                    return true;
+                }
+            }
+        }
+
+        //checking reverse diagonal
+        if(posx + posy == 2){
+            for(int i = 0;i<3;i++){
+                if(!rectvals[i][2-i].equals(a))
+                    break;
+                if(i == 2){
+                    return true;
+                }
+            }
+        }
+
+
+        return false;
+    }
+
+
+
     //getting ai move
     void getMove()
     {
+
+        boolean w=false;
+        for(int i=0;i<3;i++)
+        {
+            for (int j = 0; j < 3; j++) {
+                if (rectvals[i][j].equals("")) {
+                    rectvals[i][j] = pl2;
+
+                    w = isGameOver1(pl2,i,j);
+                    rectvals[i][j] = "";
+                    if (w) {
+                        this.aix = i;
+                        this.aiy = j;
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("fail11111111111111111111111111111111111");
+
+        for(int i=0;i<3;i++)
+        {
+            for (int j = 0; j < 3; j++) {
+                if (rectvals[i][j].equals("")) {
+                    rectvals[i][j] = pl1;
+                    w = isGameOver1(pl1,i,j);
+                    rectvals[i][j] = "";
+                    if (w) {
+                        this.aix = i;
+                        this.aiy = j;
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("fail222222222222222222222222222222222222222222");
+
+        if (rectvals[1][1].equals(""))
+        {
+            this.aix = 1;
+            this.aiy = 1;
+            return;
+        }
+
+        System.out.println("fail33333333333333333333333333333333333333333");
         int found=0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -453,6 +552,9 @@ public class Drawing60 extends View {
             if(found==1)
                 break;
         }
+
+        System.out.println("fail44444444444444444444444444444444444");
+
     }
 
 }
