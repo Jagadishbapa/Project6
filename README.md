@@ -20,3 +20,7 @@ References--  https://github.com/elesdoar/tictactoe/blob/master/src/com/canvasof
 Anything that doesn't work:
 
 
+# Graded
+## 45/50
+
+* When playing against the AI, if I select to be the "O" then the computer starts by playing twice. -5
